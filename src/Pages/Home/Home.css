@@ -1,0 +1,77 @@
+.home{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-display: block;
+}
+
+.brand, .motto{
+    user-select: none;
+}
+
+.brand{
+    font-family: lobster;
+    font-size: 6em;
+}
+
+.motto{
+    font-family: Century;
+    margin-top: 6px;
+
+    font-size: 1.2em;
+}
+
+.search{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin-top:20px;
+
+}
+
+.query{
+    color:rgba(0,0,0,0.8);
+    font-size: 1.1em;
+    font-family: Century;
+
+    min-width: 250px;
+    max-width: 400px;
+    width: 50vw;
+
+    padding: 6px 10px;
+    padding-right: 30px;
+}
+
+.query:focus, .query:active{
+    outline: none;;
+}
+
+.query::after{
+    display: block;
+    content: "search";
+
+    text-rendering: auto;
+    font-family: material-icon;
+    width: 10px;
+    height: 10px;
+}
+
+.search_component{
+    transform: translateY(-80px);
+    width: 100vw;
+}
+
+.search_icon::after{
+    content: "search";
+    position: absolute;
+    right: 10px;
+    top: 12px;
+}
+
+.search_icon{
+    position: relative;
+    font-family: material-icons;
+    width: min-content;
+}
