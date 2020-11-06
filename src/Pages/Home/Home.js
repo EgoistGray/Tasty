@@ -56,20 +56,23 @@ class Home extends React.Component {
                     </div>
                 </div>
 
-                <Flipper flipKey={this.state.isShowingDetails}>
-
-                    <Flipped flipId="details">
-                        {this.state.isShowingDetails && <Details details={this.state.foodDetails} />}
-                    </Flipped>
+                {/* <Flipper flipKey={this.state.isShowingDetails} onStart={console.log("Animation Changed")}> */}
+                    {/* <Flipped flipId="details">
+                        {flippedProps => this.state.isShowingDetails && <Details flipToolkitProperties={flippedProps} details={this.state.foodDetails} />}
+                    </Flipped> */}
 
                     <CardContainer>
                         {this.tmpDatas.map(data => {
                             return (
-                                <Card key={Math.random()} name={data.name} details={data} showDetails={this.showDetails} />
+                                <Flipped key={`card-${data.id}`} flipId={`card-${data.id}`}>
+                                    {
+                                        flipped => <Card flipToolkitProperties={ flipped } key={`card-${data.id}`} name={data.name} details={data} showDetails={this.showDetails} />
+                                    }
+                                </Flipped>
                             )
                         })}
                     </CardContainer>
-                </Flipper>
+                {/* </Flipper> */}
             </div>
 
         );

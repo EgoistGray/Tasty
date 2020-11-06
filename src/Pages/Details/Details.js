@@ -18,8 +18,9 @@ class Details extends React.Component {
     }
     render() {
         return (
+            // <div className="details page" {...this.props.flipToolkitProperties}>
             <div className="details page">
-                <Flipped flipId="foodPhoto">
+                <Flipped flipId={`foodPhoto-${this.props.match.params.foodId}`}>
                     <div className="photo"></div>
                 </Flipped>
                 <div className="food-details">

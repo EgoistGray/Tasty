@@ -1,6 +1,6 @@
 .photo {
     height: 100vh;
-    background: beige;
+    background: black;
     width: 30vw;
     min-width: 420px;
 
@@ -18,6 +18,6 @@
     position: fixed;
     z-index: 30;
 
-    top:0px;
-    left:0px;
+    top: 0px;
+    left: 0px;
 }
