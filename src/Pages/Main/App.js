@@ -1,8 +1,8 @@
 import './App.css';
 import Navbar from '../../Components/Navbar/Navbar';
-import { Flipper, Flipped } from 'react-flip-toolkit';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from '../Home/Home';
+import Details from '../Details/Details';
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
+          <Route path="/details/:foodId" component={Details} />
         </Switch>
       </Router>
     </div>

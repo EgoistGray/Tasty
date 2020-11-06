@@ -1,8 +1,21 @@
-@media screen and (max-width: 500px){
-    .navbar{
-        display: none !important;
-    }
+@media screen and (max-width: 500px) {
+
+  .navbar,
+  .photo {
+    display: none !important;
+  }
 }
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,9 +24,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  box-sizing: border-box;
   width: 100vw;
   height: 100vh;
+
+  overflow-x: hidden;
 }
 
 code {
@@ -22,31 +36,32 @@ code {
 }
 
 /* Custom Element Change */
-a{
-  color: rgba(0,0,0,.5);
+a {
+  color: rgba(0, 0, 0, .5);
   text-decoration: none;
   transition: 100ms ease-in-out;
   user-select: none;
 }
 
-a:hover{
-  color:black;
+a:hover {
+  color: black;
   transition: 100ms ease-in-out;
 }
 
-@font-face{
+@font-face {
   font-weight: 400;
   font-family: material-icons;
   font-style: normal;
   src: url('./Assets/Fonts/material.ttf');
 }
 
-@font-face{
+@font-face {
   font-family: lobster-bold;
   font-style: bold;
   src: url('./Assets/Fonts/lobster-bold.otf');
 }
-@font-face{
+
+@font-face {
   font-family: lobster;
   font-style: normal;
   src: url('./Assets/Fonts/lobster.otf');

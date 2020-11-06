@@ -1,6 +1,10 @@
 import React from 'react';
 import '../Root/page.css';
 import './Home.css';
+import '../../Components/Card/Card';
+import './CardContainer/CardContainer';
+import CardContainer from './CardContainer/CardContainer';
+import Card from '../../Components/Card/Card';
 
 class Home extends React.Component {
     render() {
@@ -17,6 +21,13 @@ class Home extends React.Component {
                         </div>
                     </div>
                 </div>
+                <CardContainer>
+                    <Card name="Example Food"/>
+                    <Card name="Example Food"/>
+                    <Card name="Example Food"/>
+                    <Card name="Example Food"/>
+                    <Card name="Example Food"/>
+                </CardContainer>
             </div>
         );
     }

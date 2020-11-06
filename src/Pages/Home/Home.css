@@ -1,9 +1,5 @@
 .home{
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    font-display: block;
 }
 
 .brand, .motto{
@@ -59,7 +55,16 @@
 }
 
 .search_component{
-    transform: translateY(-80px);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    flex-direction: column;
+    font-display: block;
+
+    height: 60vh;
+
+    transform: translateY(-60px);
     width: 100vw;
 }
 
