@@ -1,8 +1,7 @@
-
-.navbar{
+.navbar {
     width: 100vw;
     height: 80px;
-    background: rgba(255,255,255,.7);
+    background: rgba(255, 255, 255, .7);
 
     position: fixed;
     display: flex;
@@ -10,10 +9,10 @@
     justify-content: space-between;
 
     box-sizing: border-box;
-    z-index:20;
+    z-index: 20;
 }
 
-.nav_splitter{
+.nav_splitter {
     width: auto;
     height: 100%;
 
@@ -21,11 +20,11 @@
     align-items: center;
 }
 
-.nav_splitter:first-child{
+.nav_splitter:first-child {
     margin-left: +30px;
 }
 
-.navbar > .nav_splitter:last-child{
+.navbar>.nav_splitter:last-child {
     flex-direction: row;
     align-self: flex-end;
 }

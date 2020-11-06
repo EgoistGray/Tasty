@@ -1,17 +1,21 @@
 .photo {
     height: 100vh;
-    background: rgba(0, 0, 0, .8);
+    background: beige;
     width: 30vw;
     min-width: 420px;
 
-    z-index: 30;
 }
 
 .food-details {
     height: 100vh;
     width: 70vw;
+
+    background-color: white;
 }
 
 .details {
     display: flex;
+    position: fixed;
+    z-index: 30;
+
 }

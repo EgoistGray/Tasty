@@ -1,14 +1,15 @@
 import React from 'react';
 import './Details.css';
+import {Flipped} from 'react-flip-toolkit';
 
 class Details extends React.Component {
 
     constructor(props) {
         super();
         
-        this.state = {
-            foodId : props.match.params.foodId
-        }
+        // this.state = {
+        //     foodId : props.match.params.foodId
+        // }
 
     }
 
@@ -16,12 +17,11 @@ class Details extends React.Component {
         
     }
     render() {
-
-        console.log(this.props);
-        console.log(this.props.match.params);
         return (
             <div className="details page">
-                <div className="photo"></div>
+                <Flipped flipId="foodPhoto">
+                    <div className="photo"></div>
+                </Flipped>
                 <div className="food-details">
 
                 </div>

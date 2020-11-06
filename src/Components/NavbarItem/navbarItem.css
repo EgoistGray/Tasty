@@ -1,11 +1,12 @@
-.nav_item{
+.nav_item {
     margin: 4px 30px;
 
     font-family: Century;
     font-size: 1.5em;
+
 }
 
-.nav_item_account{
+.nav_item_account {
     margin-right: 40px;
 
 }

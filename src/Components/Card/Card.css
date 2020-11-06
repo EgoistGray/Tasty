@@ -1,39 +1,40 @@
-.card{
+.card {
     border-radius: 25px;
     min-height: 300px;
-    
-    min-width:  270px;
+
+    min-width: 270px;
     max-width: 350px;
 
     width: 100vw;
-    height: 400px;
+    height: 450px;
 
-    background: rgba(0,0,0,0.8);
-
-    margin: 20px 20px;
+    background: rgba(0, 0, 0, 0.8);
 
     display: flex;
-    color:white;
+    color: white;
 
     align-items: flex-start;
     flex-direction: column;
+
+    margin: auto;
 }
 
-.name{
+.name {
     font-size: 1.4em;
 }
 
-.image{
+.image {
     width: 100%;
-    height: 100%;;
+    height: 100%;
+    ;
 }
 
-.description{
+.description {
     display: flex;
     align-items: flex-start;
     justify-content: center;
     flex-direction: column;
-    
+
     width: 100%;
     height: 7em;
 
