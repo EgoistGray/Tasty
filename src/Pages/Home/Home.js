@@ -10,60 +10,68 @@ import { Flipped, Flipper } from 'react-flip-toolkit';
 
 class Home extends React.Component {
 
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
-            isShowingDetails: false
+            isShowingDetails: false,
+            foodDetails: {}
         };
 
         //Implementing rerouting details here
+        if (props.match?.params) {
+            //Here setup state to open details
+        };
+
 
         this.showDetails = this.showDetails.bind(this);
         this.tmpDatas = [{
             name: "Macaroni",
-            id:1234
-        },{
+            id: 1234
+        }, {
             name: "Dolly",
-            id:1233
-        },{
+            id: 1233
+        }, {
             name: "Mumuwu",
-            id:1231
-        },{
+            id: 1231
+        }, {
             name: "Homu",
-            id:1243
-        },{
+            id: 1243
+        }, {
             name: "Matuli",
-            id:1123
+            id: 1123
         },]
     }
     render() {
         return (
-            <Flipper flipKey={this.state.isShowingDetails}>
-                <div className="home page">
-                    <div className="search_component">
-                        <div className="title">
-                            <div className="brand">Tasty</div>
-                            <div className="motto">For food lovers, By food lovers</div>
-                        </div>
-                        <div className="search">
-                            <div className="search_icon">
-                                <input className="query" type="text" id="query" placeholder="What are you craving for?" />
-                            </div>
+            <div className="home page">
+                <div className="search_component">
+                    <div className="title">
+                        <div className="brand">Tasty</div>
+                        <div className="motto">For food lovers, By food lovers</div>
+                    </div>
+                    <div className="search">
+                        <div className="search_icon">
+                            <input className="query" type="text" id="query" placeholder="What are you craving for?" />
                         </div>
                     </div>
-                    <Flipped flipId="cards">
-                            <CardContainer>
-                            {this.tmpDatas.map(data => {
-                                return (
-                                    <Flipped flipId={Math.random().toString()}>
-                                        <Card key={data.id} name={data.name} details={{ id: data.id }} />
-                                    </Flipped>);        
-                                })}
-                            </CardContainer>
-                        </Flipped>
-                    </div>
-            </Flipper>
-                
+                </div>
+
+                <Flipper flipKey={this.state.isShowingDetails}>
+
+                    <Flipped flipId="details">
+                        {this.state.isShowingDetails && <Details details={this.state.foodDetails} />}
+                    </Flipped>
+
+                    <CardContainer>
+                        {this.tmpDatas.map(data => {
+                            return (
+                                <Card key={Math.random()} name={data.name} details={data} showDetails={this.showDetails} />
+                            )
+                        })}
+                    </CardContainer>
+                </Flipper>
+            </div>
+
         );
     }
 
@@ -71,7 +79,10 @@ class Home extends React.Component {
         this.setState(state => {
             return {
                 ...state,
-                isShowingDetails: true
+                isShowingDetails: true,
+                foodDetails: {
+                    id: id
+                }
             }
         });
     }
