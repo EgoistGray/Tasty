@@ -13,6 +13,10 @@ class CardContainer extends React.Component {
         )
     }
 
+    componentDidMount() {
+        //Get datas here
+    }
+
 }
 
 export default CardContainer;

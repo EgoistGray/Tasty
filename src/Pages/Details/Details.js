@@ -38,7 +38,7 @@ class Details extends React.Component {
                     <div className={`photo ${this.props.parentState.isShowingDetails ? "photo-show" : ""}`}></div>
                 </Flipped>
                 <Flipped flipId="foodDesc">
-                    <div className={`food-details-default`}></div>
+                    {this.props.parentState.isShowingDetails && <div className={`food-details-default`}></div>}
                 </Flipped>
             </div>
                     

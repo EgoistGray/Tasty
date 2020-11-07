@@ -7,6 +7,7 @@ import CardContainer from './CardContainer/CardContainer';
 import Card from '../../Components/Card/Card';
 import Details from '../Details/Details';
 import { Flipped, Flipper } from 'react-flip-toolkit';
+import MealDB from '../../Components/Database/MealDBInterfacer';
 
 class Home extends React.Component {
 
@@ -18,13 +19,9 @@ class Home extends React.Component {
 
         this.state = props.location.state || {
             isShowingDetails: false,
-            foodDetails: {}
+            foodDetails: {},
+            isLoading: true
         };
-
-        this.defaultState = {
-            isShowingDetails: false,
-            foodDetails: {}    
-        }
 
         //Implementing rerouting details here
 
@@ -74,6 +71,9 @@ class Home extends React.Component {
                 }
             });
         };
+
+        let db = new MealDB();
+        db.getRandoms(16);
     }
 
     render() {
@@ -96,7 +96,7 @@ class Home extends React.Component {
 
                 <Flipper flipKey={this.state.isShowingDetails}> 
                     <Flipped flipId="foodDesc">
-                        {<div className={`interpolator ${this.state.isShowingDetails ? "interpolator-visible" : ""}`} />}
+                        {!this.state.isShowingDetails && <div className={`interpolator ${this.state.isShowingDetails ? "interpolator-visible" : ""}`} />}
                     </Flipped>
                     <Flipped flipId="details"> 
                         {this.state.isShowingDetails && <Details parentState={this.state} details={this.state.foodDetails}/>}
