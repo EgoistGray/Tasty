@@ -1,8 +1,19 @@
+:root {
+  --card-border-radius: 25px;
+}
+
 @media screen and (max-width: 500px) {
 
   .navbar,
   .photo {
     display: none !important;
+  }
+
+  .food-details {
+    width: 100vw !important;
+  }
+  .food-details-default {
+    width: 100vw !important;
   }
 }
 

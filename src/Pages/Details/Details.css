@@ -1,8 +1,15 @@
+:root {
+    --card-border-radius: 35px;
+}
+
 .photo {
     height: 100vh;
     background: black;
     width: 30vw;
     min-width: 420px;
+
+    border-radius: var(--card-border-radius);
+    z-index: 50;
 
 }
 
@@ -11,6 +18,29 @@
     width: 70vw;
 
     background-color: white;
+
+    opacity: 0;
+    transform: translateX(-20px);
+
+
+    transition-delay: 200ms;
+    transition: 300ms ease-in-out;
+}
+
+.food-details-show {
+    transition-delay: 200ms;
+    transition: 300ms ease-in-out;
+    opacity: 1 !important;
+
+    transform: translateX(0);
+}
+
+.food-details-default{
+    height: 100vh;
+    width: 70vw;
+
+    background-color: white;
+    opacity: 1;
 }
 
 .details {
@@ -20,4 +50,9 @@
 
     top: 0px;
     left: 0px;
+
+}
+
+.photo-show {
+    border-radius: 0px;
 }

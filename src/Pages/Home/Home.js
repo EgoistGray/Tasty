@@ -12,15 +12,21 @@ class Home extends React.Component {
 
     constructor(props) {
         super();
-        this.state = {
+
+        console.log(props.history);
+        console.log('RUNNING CONSTRUCTOR');
+
+        this.state = props.location.state || {
             isShowingDetails: false,
             foodDetails: {}
         };
 
+        this.defaultState = {
+            isShowingDetails: false,
+            foodDetails: {}    
+        }
+
         //Implementing rerouting details here
-        if (props.match?.params) {
-            //Here setup state to open details
-        };
 
 
         this.showDetails = this.showDetails.bind(this);
@@ -39,11 +45,43 @@ class Home extends React.Component {
         }, {
             name: "Matuli",
             id: 1123
-        },]
+            }];
+        
+        
+        let defaultPush = props.history.push;
+        props.history.push = (args) => {
+            console.log(args);
+            if (args.state?.playExitAnim) {
+                args.state.playExitAnim().then( () => {
+                    delete args.state.playExitAnim;
+                    defaultPush(args);
+                })
+            }
+
+            defaultPush(args);
+            return;
+        }
+
+        props.history.replace(props.location.pathname, this.state);
+
+        if (props.match?.params?.foodId) {
+            console.log("UPDATING STUFF");
+            //Here setup state to open details
+            this.setState({
+                isShowingDetails: true,
+                foodDetails: {
+                    id: props.match.params.foodId
+                }
+            });
+        };
     }
+
     render() {
         return (
             <div className="home page">
+
+
+
                 <div className="search_component">
                     <div className="title">
                         <div className="brand">Tasty</div>
@@ -56,38 +94,44 @@ class Home extends React.Component {
                     </div>
                 </div>
 
-                {/* <Flipper flipKey={this.state.isShowingDetails} onStart={console.log("Animation Changed")}> */}
-                    {/* <Flipped flipId="details">
-                        {flippedProps => this.state.isShowingDetails && <Details flipToolkitProperties={flippedProps} details={this.state.foodDetails} />}
-                    </Flipped> */}
+                <Flipper flipKey={this.state.isShowingDetails}> 
+                    <Flipped flipId="foodDesc">
+                        {<div className={`interpolator ${this.state.isShowingDetails ? "interpolator-visible" : ""}`} />}
+                    </Flipped>
+                    <Flipped flipId="details"> 
+                        {this.state.isShowingDetails && <Details parentState={this.state} details={this.state.foodDetails}/>}
+                    </Flipped>
 
                     <CardContainer>
                         {this.tmpDatas.map(data => {
                             return (
-                                <Flipped key={`card-${data.id}`} flipId={`card-${data.id}`}>
-                                    {
-                                        flipped => <Card flipToolkitProperties={ flipped } key={`card-${data.id}`} name={data.name} details={data} showDetails={this.showDetails} />
-                                    }
-                                </Flipped>
+                                <Card parentState={this.state} key={`card-${data.id}`} name={data.name} details={data} showDetails={this.showDetails} />
                             )
                         })}
                     </CardContainer>
-                {/* </Flipper> */}
+                </Flipper>
             </div>
 
         );
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.location !== prevProps.location) {
+            this.setState(this.props.location.state);
+        }
+    }
+
     showDetails(id) {
-        this.setState(state => {
-            return {
-                ...state,
-                isShowingDetails: true,
-                foodDetails: {
+        this.props.history.push({
+            pathname: `/details/${id}`, 
+            search: '',
+            state: {isShowingDetails: true,
+            foodDetails: {
                     id: id
                 }
             }
         });
+        return;
     }
 }
 

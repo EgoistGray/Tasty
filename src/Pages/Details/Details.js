@@ -1,32 +1,47 @@
 import React from 'react';
 import './Details.css';
-import {Flipped} from 'react-flip-toolkit';
+import {Flipped, Flipper} from 'react-flip-toolkit';
 
 class Details extends React.Component {
 
     constructor(props) {
         super();
-        
-        // this.state = {
-        //     foodId : props.match.params.foodId
-        // }
+        this.state = {
+            isShowingDetails: false,
+            showFoodDetails: false
+        };
 
+        this.setState(_prev => {
+            return {
+                ..._prev
+            }
+        })
     }
 
     componentDidMount() {
+        this.setState(_prev => {
+            return {
+                ..._prev,
+                isShowingDetails: this.props.parentState.isShowingDetails
+            }
+        })
+    }
+
+    componentWillUnmount() {
         
     }
+
     render() {
         return (
-            // <div className="details page" {...this.props.flipToolkitProperties}>
-            <div className="details page">
-                <Flipped flipId={`foodPhoto-${this.props.match.params.foodId}`}>
-                    <div className="photo"></div>
+            <div className="details page" >
+                <Flipped flipId={`foodPhoto-${this.props.details.id}`}>
+                    <div className={`photo ${this.props.parentState.isShowingDetails ? "photo-show" : ""}`}></div>
                 </Flipped>
-                <div className="food-details">
-
-                </div>
+                <Flipped flipId="foodDesc">
+                    <div className={`food-details-default`}></div>
+                </Flipped>
             </div>
+                    
         );
     }
 }
