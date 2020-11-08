@@ -8,7 +8,8 @@ class Details extends React.Component {
         super();
         this.state = {
             isShowingDetails: false,
-            showFoodDetails: false
+            showFoodDetails: false,
+            imgSrc: ""
         };
 
         this.setState(_prev => {
@@ -22,23 +23,23 @@ class Details extends React.Component {
         this.setState(_prev => {
             return {
                 ..._prev,
-                isShowingDetails: this.props.parentState.isShowingDetails
+                isShowingDetails: this.props.parentState.isShowingDetails,
+                imgSrc: `url("${this.props.foodDetails.details.strMealThumb}")`
             }
         })
     }
 
-    componentWillUnmount() {
-        
-    }
-
     render() {
+        console.log(this.props);
         return (
             <div className="details page" >
-                <Flipped flipId={`foodPhoto-${this.props.details.id}`}>
-                    <div className={`photo ${this.props.parentState.isShowingDetails ? "photo-show" : ""}`}></div>
+                <Flipped flipId={`foodPhoto-${this.props.foodDetails.id}`}>
+                    <div style={{ backgroundImage: this.state.imgSrc, backgroundSize: "cover", backgroundRepeat: "no-repeat" }} className={`photo ${this.props.parentState.isShowingDetails ? "photo-show" : ""}`}></div>
                 </Flipped>
                 <Flipped flipId="foodDesc">
-                    {this.props.parentState.isShowingDetails && <div className={`food-details-default`}></div>}
+                    {this.props.parentState.isShowingDetails && <div className={`food-details-default`}>\
+                     
+                    </div>}
                 </Flipped>
             </div>
                     

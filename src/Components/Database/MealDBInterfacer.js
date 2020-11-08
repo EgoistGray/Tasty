@@ -8,6 +8,11 @@ class MealDB {
         }
 
         this.createRandomPromise = this.createRandomPromise.bind(this);
+
+        this.seenDatasetsIds = [];
+
+
+        this.sanitizeDatasets = this.sanitizeDatasets.bind(this);
     }
 
     createRandomPromise() {
@@ -21,17 +26,31 @@ class MealDB {
 
     getRandoms(quantity) {
         let promises = [];
-        let results = [];
+
         for (let i = 0; i < quantity; i++) promises.push(this.createRandomPromise());
 
-        Promise.all(promises).then(stuff => {
-            new Promise(resolve => {
-                results = stuff.map(stuff => stuff.meals);
-                resolve(stuff.map(stuff => stuff.meals));
+        return Promise.all(promises).then(stuff => {
+            return new Promise(resolve => {
+                let results = stuff.map(stuff => stuff.meals).flat();
+                results = this.sanitizeDatasets(results);
+                resolve(results);
             });
-        }).then(() => {
-            console.log(results);
         });
+    }
+    sanitizeDatasets(datasets) {
+        let sanitized = [];
+
+        let ids = datasets.map((dataset) => dataset.idMeal);
+        ids.map((id, index) => {
+            if (ids.indexOf(id) === index && this.seenDatasetsIds.indexOf(id) === -1) {
+                sanitized.push(datasets[index]);
+                this.seenDatasetsIds.push(id);
+            }
+
+            return id;
+        });
+
+        return sanitized;
     }
 }
 

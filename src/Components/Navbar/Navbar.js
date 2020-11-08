@@ -13,9 +13,11 @@ class Navbar extends React.Component {
                     <NavItem dest="/feedback" name="Feedback" />
                     <NavItem dest="/about" name="About" />
                 </NavSplitter>
-                <NavSplitter>
+
+                {/* Not yet implementing account system */}
+                {/* <NavSplitter>
                     <AccountItem dest="/account" name="Adam Smith" />
-                </NavSplitter>
+                </NavSplitter> */}
             </div>
         );
     }

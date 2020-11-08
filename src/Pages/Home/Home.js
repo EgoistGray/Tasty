@@ -99,16 +99,10 @@ class Home extends React.Component {
                         {!this.state.isShowingDetails && <div className={`interpolator ${this.state.isShowingDetails ? "interpolator-visible" : ""}`} />}
                     </Flipped>
                     <Flipped flipId="details"> 
-                        {this.state.isShowingDetails && <Details parentState={this.state} details={this.state.foodDetails}/>}
+                        {this.state.isShowingDetails && <Details parentState={this.state} foodDetails={this.state.foodDetails}/>}
                     </Flipped>
 
-                    <CardContainer>
-                        {this.tmpDatas.map(data => {
-                            return (
-                                <Card parentState={this.state} key={`card-${data.id}`} name={data.name} details={data} showDetails={this.showDetails} />
-                            )
-                        })}
-                    </CardContainer>
+                    <CardContainer parentState={this.state} showDetails={this.showDetails} />
                 </Flipper>
             </div>
 
@@ -121,13 +115,14 @@ class Home extends React.Component {
         }
     }
 
-    showDetails(id) {
+    showDetails(id, details) {
         this.props.history.push({
             pathname: `/details/${id}`, 
             search: '',
             state: {isShowingDetails: true,
             foodDetails: {
-                    id: id
+                    id: id,
+                    details: details
                 }
             }
         });
