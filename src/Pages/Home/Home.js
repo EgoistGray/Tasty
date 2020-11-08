@@ -42,14 +42,14 @@ class Home extends React.Component {
         }, {
             name: "Matuli",
             id: 1123
-            }];
-        
-        
+        }];
+
+
         let defaultPush = props.history.push;
         props.history.push = (args) => {
             console.log(args);
             if (args.state?.playExitAnim) {
-                args.state.playExitAnim().then( () => {
+                args.state.playExitAnim().then(() => {
                     delete args.state.playExitAnim;
                     defaultPush(args);
                 })
@@ -80,8 +80,6 @@ class Home extends React.Component {
         return (
             <div className="home page">
 
-
-
                 <div className="search_component">
                     <div className="title">
                         <div className="brand">Tasty</div>
@@ -94,12 +92,12 @@ class Home extends React.Component {
                     </div>
                 </div>
 
-                <Flipper flipKey={this.state.isShowingDetails}> 
+                <Flipper flipKey={this.state.isShowingDetails}>
                     <Flipped flipId="foodDesc">
                         {!this.state.isShowingDetails && <div className={`interpolator ${this.state.isShowingDetails ? "interpolator-visible" : ""}`} />}
                     </Flipped>
-                    <Flipped flipId="details"> 
-                        {this.state.isShowingDetails && <Details parentState={this.state} foodDetails={this.state.foodDetails}/>}
+                    <Flipped flipId="details">
+                        {this.state.isShowingDetails && <Details parentState={this.state} foodDetails={this.state.foodDetails} />}
                     </Flipped>
 
                     <CardContainer parentState={this.state} showDetails={this.showDetails} />
@@ -117,10 +115,11 @@ class Home extends React.Component {
 
     showDetails(id, details) {
         this.props.history.push({
-            pathname: `/details/${id}`, 
+            pathname: `/details/${id}`,
             search: '',
-            state: {isShowingDetails: true,
-            foodDetails: {
+            state: {
+                isShowingDetails: true,
+                foodDetails: {
                     id: id,
                     details: details
                 }
