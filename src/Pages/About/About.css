@@ -1,0 +1,54 @@
+.about{
+    width: 100vw;
+    height: 50vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+}
+
+.about-title{
+    font-family: lobster;
+    font-size: 5em;
+    margin-bottom: 20px;
+}
+
+
+.about-content{
+    font-family: Calibri, Roboto;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+}
+
+.about-content-container{
+    padding: 0px 30px;
+}
+
+.about-developer{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    padding: 0px 30px;
+}
+
+.about-developer-name{
+    padding: 10px 20px;
+    width: auto;
+    height: auto;
+
+    font-size: 1.3em;
+    font-weight: bolder;
+
+    transition: 500ms ease-in-out;
+}
+
+.hidden-item{
+    opacity: 0;
+    transform: translateX(-20px);
+}
+.hidden-devs{
+    opacity: 0;
+    transform: translateY(9px);
+}

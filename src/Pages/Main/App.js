@@ -3,7 +3,7 @@ import Navbar from '../../Components/Navbar/Navbar';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Home from '../Home/Home';
 import About from '../About/About';
-import { Flipper, Flipped } from 'react-flip-toolkit';
+import { Flipper } from 'react-flip-toolkit';
 
 function App() {
   return (

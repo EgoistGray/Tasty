@@ -1,0 +1,29 @@
+
+div.loadingContainer{
+    position: absolute;
+    width: 100vw;
+    height: 90vh;
+
+    top:0px;
+    left: 0px;
+
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+div.loading{
+    background:rgba(0,0,0,0.8);
+    color:white;
+
+    padding: 15px 50px;
+    font-size: 1.3em;
+
+    border-radius: 15px;
+}
+
+.loadHidden{
+    display: none;
+}
