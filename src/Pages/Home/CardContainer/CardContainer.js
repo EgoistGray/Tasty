@@ -22,11 +22,12 @@ class CardContainer extends React.Component {
         return (
             <div className="cardContainer">
                 <div className="cardAligner">
-                    {!this.state.isLoading && this.state.datas.map(data => {
+                    {/* Pls fix the loading stuff */}
+                    { this.state.isLoading ? "Loading..." : this.state.datas.map(data => {
                         return (
                              <Card  parentState={this.props.parentState} key={`card-${data.strMeal}`} name={data.strMeal} details={data} showDetails={this.props.showDetails} />
                         )
-                    })}
+                    }) }
                 </div>
             </div>
         )
