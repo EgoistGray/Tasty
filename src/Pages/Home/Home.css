@@ -5,6 +5,7 @@
 .brand{
     font-family: lobster;
     font-size: 6em;
+
 }
 
 .motto{
@@ -99,6 +100,12 @@
     transform:translateX(100vw);
     background-color: white;
 
-    /* transition: opacity 300ms ease-in-out; */
     /* transition-delay: 300ms; */
+}
+
+
+.hidden-title{
+    opacity: 0;
+    transform: translateY(20px);
+    
 }

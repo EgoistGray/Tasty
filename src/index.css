@@ -26,12 +26,16 @@
   background-color: transparent;
 }
 
+html{
+  overflow-x: hidden;
+}
+
 html,
 body {
   margin: 0px;
   padding: 0px;
-  overflow-x: hidden;
 
+  font-display: block;
 }
 
 body {

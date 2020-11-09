@@ -9,7 +9,7 @@ class Navbar extends React.Component {
             <div className="navbar">
                 <NavSplitter>
                     <NavItem dest="/" name="Home" />
-                    <NavItem dest="/about" name="About" />
+                    <NavItem dest="/about" name="About us" />
                 </NavSplitter>
 
                 {/* Not yet implementing account system */}

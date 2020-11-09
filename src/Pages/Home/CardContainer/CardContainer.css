@@ -16,3 +16,10 @@
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     grid-gap: 20px;
 }
+
+.hidden-card{
+    opacity: 0;
+    transform: translateY(20px);
+    
+    transition: 300ms ease-in-out;
+}
