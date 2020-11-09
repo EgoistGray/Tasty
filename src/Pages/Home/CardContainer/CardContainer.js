@@ -3,15 +3,16 @@ import './CardContainer.css'
 
 import Card from '../../../Components/Card/Card';
 import MealDB from '../../../Components/Database/MealDBInterfacer';
+import Loader from '../../../Components/Loader/Loader';
 
 class CardContainer extends React.Component {
 
-    constructor() {
+    constructor(props) {
         super();
 
         this.db = new MealDB();
         this.state = {
-            isLoading: true,
+            isLoading: props.parentState.isLoading,
             datas : []
         }
 
@@ -23,7 +24,7 @@ class CardContainer extends React.Component {
             <div className="cardContainer">
                 <div className="cardAligner">
                     {/* Pls fix the loading stuff */}
-                    { this.state.isLoading ? "Loading..." : this.state.datas.map(data => {
+                    { this.props.parentState.isLoading ? <Loader /> : this.props.parentState.displayedDatas.map(data => {
                         return (
                              <Card  parentState={this.props.parentState} key={`card-${data.strMeal}`} name={data.strMeal} details={data} showDetails={this.props.showDetails} />
                         )
@@ -31,25 +32,6 @@ class CardContainer extends React.Component {
                 </div>
             </div>
         )
-    }
-
-    componentDidMount() {
-        //Get datas here
-        this.db.getRandoms(this.quantityPerBatch).then(result => {
-            result = result.flat();
-
-            this.setState(_prev => {
-                return {
-                    ..._prev,
-                    isLoading: false,
-                    datas: result
-                }
-            });
-            console.log(this.state);
-        }).catch(err => {
-            console.log(err);
-        });
-
     }
 
 }

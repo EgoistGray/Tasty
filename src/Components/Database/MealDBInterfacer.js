@@ -52,6 +52,15 @@ class MealDB {
 
         return sanitized;
     }
+
+    search(s) {
+        return new Promise((resolve, reject) => {
+            fetch(this.queries.search + s)
+                .then(text => text.json())
+                .then(json => resolve(json))
+                .catch(err => reject(err));
+        });
+    }
 }
 
 export default MealDB;

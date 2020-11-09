@@ -10,7 +10,6 @@ function App() {
       <div className="App">
         <Navbar />
         <Route render={(routerDetails) => {
-          console.log(routerDetails.location.pathname);
           return (
             <Flipper flipKey={`${routerDetails.location.pathname}`}> 
                 <Switch location={routerDetails.location}>

@@ -14,50 +14,22 @@ class Home extends React.Component {
     constructor(props) {
         super();
 
-        console.log(props.history);
-        console.log('RUNNING CONSTRUCTOR');
-
+        this.quantityPerBatch = 100;
         this.state = props.location.state || {
             isShowingDetails: false,
             foodDetails: {},
-            isLoading: true
+            isLoading: true,
+            searchQuery: "",
+            displayedDatas: []
         };
 
         //Implementing rerouting details here
 
-
         this.showDetails = this.showDetails.bind(this);
-        this.tmpDatas = [{
-            name: "Macaroni",
-            id: 1234
-        }, {
-            name: "Dolly",
-            id: 1233
-        }, {
-            name: "Mumuwu",
-            id: 1231
-        }, {
-            name: "Homu",
-            id: 1243
-        }, {
-            name: "Matuli",
-            id: 1123
-            }];
-        
-        
-        let defaultPush = props.history.push;
-        props.history.push = (args) => {
-            console.log(args);
-            if (args.state?.playExitAnim) {
-                args.state.playExitAnim().then( () => {
-                    delete args.state.playExitAnim;
-                    defaultPush(args);
-                })
-            }
-
-            defaultPush(args);
-            return;
-        }
+        this.hideDetails = this.hideDetails.bind(this);
+        this.initializeDatas = this.initializeDatas.bind(this);
+        this.scrollLoader = this.scrollLoader.bind(this);
+        this.onChange = this.onChange.bind(this);
 
         props.history.replace(props.location.pathname, this.state);
 
@@ -68,19 +40,52 @@ class Home extends React.Component {
                 isShowingDetails: true,
                 foodDetails: {
                     id: props.match.params.foodId
-                }
+                },
+                isLoading: true,
             });
         };
 
-        let db = new MealDB();
-        db.getRandoms(16);
+        this.db = new MealDB();
+        this.db.getRandoms(16);
+
+
+
+    }
+
+    componentDidMount() {
+        window.addEventListener('scroll', () => {
+            console.log("HELLO");
+        });        
+        this.initializeDatas();
+    
+    }
+
+    scrollLoader(evt) {
+        console.log("HELLO PLS OMG")
+    }
+
+
+
+    initializeDatas() {
+        this.db.getRandoms(this.quantityPerBatch).then(result => {
+            result = result.flat();
+
+            this.setState(_prev => {
+                return {
+                    ..._prev,
+                    isLoading: false,
+                    displayedDatas: result
+                }
+            });
+        }).catch(err => {
+
+        });
+
     }
 
     render() {
         return (
-            <div className="home page">
-
-
+            <div className="home page" onScroll={this.scrollLoader}>
 
                 <div className="search_component">
                     <div className="title">
@@ -89,7 +94,7 @@ class Home extends React.Component {
                     </div>
                     <div className="search">
                         <div className="search_icon">
-                            <input className="query" type="text" id="query" placeholder="What are you craving for?" />
+                            <input onChange={this.onChange} className="query" type="text" id="query" placeholder="What are you craving for?" />
                         </div>
                     </div>
                 </div>
@@ -99,14 +104,32 @@ class Home extends React.Component {
                         {!this.state.isShowingDetails && <div className={`interpolator ${this.state.isShowingDetails ? "interpolator-visible" : ""}`} />}
                     </Flipped>
                     <Flipped flipId="details"> 
-                        {this.state.isShowingDetails && <Details parentState={this.state} foodDetails={this.state.foodDetails}/>}
+                        {this.state.isShowingDetails && <Details hideDetails={this.hideDetails } parentState={this.state} foodDetails={this.state.foodDetails}/>}
                     </Flipped>
 
-                    <CardContainer parentState={this.state} showDetails={this.showDetails} />
+                    <CardContainer toggleLoadUI={this.toggleLoadUI} parentState={this.state} showDetails={this.showDetails} />
                 </Flipper>
             </div>
 
         );
+    }
+
+    onChange(evt) {
+
+        let query = evt.target.value;
+        this.db.search(query).then((json) => {
+            let datas = json.meals;
+
+            if (datas === null || datas.length < 0) datas = []; 
+
+            this.setState(_prev => {
+                return {
+                    ..._prev,
+                    displayedDatas: datas
+                }
+            })
+        });
+
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -117,15 +140,30 @@ class Home extends React.Component {
 
     showDetails(id, details) {
         this.props.history.push({
-            pathname: `/details/${id}`, 
-            search: '',
-            state: {isShowingDetails: true,
-            foodDetails: {
-                    id: id,
-                    details: details
-                }
+                pathname: `/details/${id}`, 
+                search: '',
+                state: {isShowingDetails: true,
+                foodDetails: {
+                        id: id,
+                        details: details
+                    },
+                datas: this.state.displayedDatas,
+                isLoading: false
             }
         });
+        return;
+    }
+    hideDetails() {
+        this.props.history.push({
+                pathname: `/`, 
+                search: '',
+                state: {
+                    isShowingDetails: false,
+                    foodDetails: {},
+                    isLoading: false
+                },
+            }
+        );
         return;
     }
 }

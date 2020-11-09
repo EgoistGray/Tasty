@@ -21,6 +21,11 @@
   box-sizing: border-box;
 }
 
+*::-webkit-scrollbar{
+  width: 0px;
+  background-color: transparent;
+}
+
 html,
 body {
   margin: 0px;
