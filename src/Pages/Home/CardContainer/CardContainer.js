@@ -24,13 +24,15 @@ class CardContainer extends React.Component {
     }
 
     render() {
-        if (this.props.parentState.displayedDatas === null) return;
+
+        if (this.props.parentState.displayedDatas === undefined) this.props.resetDatas();
+
         return (
             <div className="cardContainer">
                 <Flipper flipKey={ this.props.parentState.isLoading}>
                     <div className="cardAligner">
                         {/* Pls fix the loading stuff */}
-                        { this.props.parentState.isLoading ? <Loader /> : this.props.parentState.displayedDatas.map(data => {
+                        { this.props.parentState.isLoading  ? <Loader /> : this.props.parentState.displayedDatas.map(data => {
                             return (
                                 <Flipped key={`card-${data.strMeal}`} stagger="essentialCards" onAppear={this.startAnim}>
                                     { flipProps => <Card className={`cardContainer`} flipProps={flipProps} parentState={this.props.parentState} key={`card-${data.strMeal}`} name={data.strMeal} details={data} showDetails={this.props.showDetails} />}

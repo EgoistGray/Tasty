@@ -15,6 +15,10 @@
   .food-details-default {
     width: 100vw !important;
   }
+
+  .cardAligner{
+    width: 100vw;
+  }
 }
 
 * {

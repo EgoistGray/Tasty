@@ -12,7 +12,6 @@ class Home extends React.Component {
 
     constructor(props) {
         super();
-
         this.quantityPerBatch = 16;
         this.state = props.location.state || {
             isShowingDetails: false,
@@ -22,6 +21,7 @@ class Home extends React.Component {
             displayedDatas: []
         };
 
+
         //Implementing rerouting details here
 
         this.showDetails = this.showDetails.bind(this);
@@ -30,6 +30,7 @@ class Home extends React.Component {
         this.scrollLoader = this.scrollLoader.bind(this);
         this.onChange = this.onChange.bind(this);
         this.startAnim = this.startAnim.bind(this);
+        this.resetDatas = this.resetDatas.bind(this);
 
         props.history.replace(props.location.pathname, this.state);
 
@@ -41,6 +42,7 @@ class Home extends React.Component {
                 foodDetails: {
                     id: props.match.params.foodId
                 },
+                displayedDatas: [],
                 isLoading: true,
                 enterAnim: false
             });
@@ -49,6 +51,15 @@ class Home extends React.Component {
         this.db = new MealDB();
         this.loadData = false;
         this.onSeach = false;
+    }
+
+    resetDatas() {
+        this.setState(_prev => {
+            return {
+                ..._prev,
+                displayedDatas: []
+            }
+        })
     }
 
     componentWillUnmount() {
@@ -134,7 +145,7 @@ class Home extends React.Component {
                         {this.state.isShowingDetails && <Details hideDetails={this.hideDetails } parentState={this.state} foodDetails={this.state.foodDetails}/>}
                     </Flipped>
 
-                    <CardContainer toggleLoadUI={this.toggleLoadUI} parentState={this.state} showDetails={this.showDetails} />
+                    <CardContainer resetDatas={this.resetDatas} toggleLoadUI={this.toggleLoadUI} parentState={this.state} showDetails={this.showDetails} />
                 </Flipper>
             </div>
 
@@ -174,7 +185,7 @@ class Home extends React.Component {
                         id: id,
                         details: details
                     },
-                datas: this.state.displayedDatas,
+                displayedDatas: this.state.displayedDatas,
                 isLoading: false
             }
         });
