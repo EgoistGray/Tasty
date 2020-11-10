@@ -29,14 +29,12 @@ class CardContainer extends React.Component {
 
         return (
             <div className="cardContainer">
-                <Flipper flipKey={this.state.datas} straggerConfig={{ essentialCards: {reverse:true} }}>
+                <Flipper flipKey={this.state.datas.length} straggerConfig={{ essentialCards: {reverse:true} }}>
                     <div className="cardAligner">
                         {/* Pls fix the loading stuff */}
                         { this.props.parentState.isLoading  ? <Loader /> : this.props.parentState.displayedDatas.map(data => {
                             return (
-                                <Flipped key={`card-${data.strMeal}`} stagger="essentialCards" onStart={setTimeout(this.startAnim, 200)}>
-                                    { flipProps => <Card className={`cardContainer ${this.state.anim ? "" :  "hidden-card" }`} flipProps={flipProps} parentState={this.props.parentState} key={`card-${data.strMeal}`} name={data.strMeal} details={data} showDetails={this.props.showDetails} />}
-                                </Flipped>
+                                <Card className={`cardContainer ${this.state.anim ? "" :  "hidden-card" }`} parentState={this.props.parentState} key={`card-${data.strMeal}`} name={data.strMeal} details={data} showDetails={this.props.showDetails} />
                             )
                         }) }
                     </div>

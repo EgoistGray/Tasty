@@ -75,3 +75,7 @@
     
     transition: 300ms ease-in-out;
 }
+
+.cardContainer{
+    transition: 300ms ease-in-out;
+}

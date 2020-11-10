@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flipped } from 'react-flip-toolkit';
+import { Flipped, Flipper } from 'react-flip-toolkit';
 import './Card.css';
 
 class Card extends React.Component {
@@ -11,32 +11,45 @@ class Card extends React.Component {
             cardAnim: false
         }
 
+        this.startAnim = this.startAnim.bind(this);
+
+    }
+    startAnim() {
+         this.setState(_prev => {
+             return {
+                 ..._prev,
+                 cardAnim: true
+             }
+         });
     }
     render() {
         return (
-                <div {...this.props.flipProps} className={this.props.className} >
-                    <Flipped flipId={`foodPhoto-${this.props.details.idMeal}`} >
-                        {this.props.details.idMeal !== this.props.parentState.foodDetails?.id &&        
-                                <div onClick={() => { this.props.showDetails(this.props.details.idMeal, this.props.details) }} className="card" style={{backgroundImage: !this.state.loadingImage ? `url("${this.props.details.strMealThumb}")` : "", backgroundSize: "cover"}} >
-                                    <div className="image-placeholder"></div>
+                <Flipped flipId={`cardAnim-${this.props.details.idMeal}`} stagger="essential">
+                    <div className={`cardContainer ${this.state.cardAnim ? "" :  "hidden-card" }`} >
+                        <Flipped flipId={`foodPhoto-${this.props.details.idMeal}`} >
+                            {this.props.details.idMeal !== this.props.parentState.foodDetails?.id &&        
+                                    <div onClick={() => { this.props.showDetails(this.props.details.idMeal, this.props.details) }} className="card" style={{backgroundImage: !this.state.loadingImage ? `url("${this.props.details.strMealThumb}")` : "", backgroundSize: "cover"}} >
+                                        <div className="image-placeholder"></div>
 
-                                    <div className="description">
-                                        <div className="name">
-                                            {this.props.name}
-                                        </div>
-                                        <div className="type">
-                                            {`${this.props.details.strArea} Food`}
+                                        <div className="description">
+                                            <div className="name">
+                                                {this.props.name}
+                                            </div>
+                                            <div className="type">
+                                                {`${this.props.details.strArea} Food`}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                        }
-                    </Flipped>
-                </div>
-
+                            }
+                        </Flipped>
+                    </div>
+                </Flipped>
         );
     }
 
     componentDidMount() {
+        setTimeout(this.startAnim, 100);
+
         let image = new Image();
         image.src = this.props.details.strMealThumb;
         image.onload = () => {
@@ -45,7 +58,7 @@ class Card extends React.Component {
                     ..._prev,
                     loadingImage: false
                 }
-            })
+            });
         }
 
     }
