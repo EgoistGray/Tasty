@@ -22,6 +22,7 @@ class Home extends React.Component {
         };
 
 
+        
         //Implementing rerouting details here
 
         this.showDetails = this.showDetails.bind(this);

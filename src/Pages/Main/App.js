@@ -17,7 +17,7 @@ function App() {
                     <Route exact path="/" component={Home} />
                     <Route path="/details/:foodId" component={Home} />
                     <Route path="/about" component={About} />
-                    <Redirect from="*" to="/" />
+                    {/* <Redirect from="*" to="/" /> */}
                 </Switch>
             </Flipper>
           );
