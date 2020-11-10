@@ -12,17 +12,15 @@ class Home extends React.Component {
 
     constructor(props) {
         super();
-        this.quantityPerBatch = 16;
+        this.quantityPerBatch = 12;
         this.state = props.location.state || {
             isShowingDetails: false,
             foodDetails: {},
             isLoading: true,
             searchQuery: "",
-            displayedDatas: []
+            displayedDatas: [],
         };
 
-
-        
         //Implementing rerouting details here
 
         this.showDetails = this.showDetails.bind(this);
@@ -32,11 +30,11 @@ class Home extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.startAnim = this.startAnim.bind(this);
         this.resetDatas = this.resetDatas.bind(this);
+        this.commitState = this.commitState.bind(this);
 
-        props.history.replace(props.location.pathname, this.state);
+        this.commitState(props.location.pathname, this.state);
 
         if (props.match?.params?.foodId) {
-            console.log("UPDATING STUFF");
             //Here setup state to open details
             this.setState({
                 isShowingDetails: true,
@@ -45,13 +43,18 @@ class Home extends React.Component {
                 },
                 displayedDatas: [],
                 isLoading: true,
-                enterAnim: false
+                enterAnim: false,
             });
         };
 
-        this.db = new MealDB();
         this.loadData = false;
-        this.onSeach = false;
+        this.onSearch = false;
+        this.db = new MealDB();
+    }
+
+    commitState(path, state, props) {
+        if (props) { props.history.replace(path, state); return; };
+        this.props?.history.replace(path, state);
     }
 
     resetDatas() {
@@ -69,7 +72,7 @@ class Home extends React.Component {
 
     componentDidMount() {
         window.addEventListener('scroll', this.scrollLoader);        
-        this.getRandomDatas();
+        if( this.state.displayedDatas.length <= 0 ) this.getRandomDatas();
         setTimeout(this.startAnim, 100)
     }
 
@@ -77,7 +80,7 @@ class Home extends React.Component {
         let scrollProgress = window.scrollY + window.innerHeight;
         let total = document.body.scrollHeight;
 
-        if (scrollProgress >= total - 500 && !this.loadData && !this.onSeach) {
+        if (scrollProgress >= total - 500 && !this.loadData && !this.onSearch) {
             this.loadData = true;
             this.getRandomDatas();
         }
@@ -88,16 +91,23 @@ class Home extends React.Component {
 
     getRandomDatas() {
         this.db.getRandoms(this.quantityPerBatch).then(result => {
-            console.log(`Data push`);
             result = result.flat();
+
+            let unsanitized_data = [...this.state.displayedDatas, ...result];
+            let sanitized = MealDB.sanitizeDatasets(unsanitized_data);
 
             this.setState(_prev => {
                 return {
                     ..._prev,
                     isLoading: false,
-                    displayedDatas: [...this.state.displayedDatas ,...result]
+                    displayedDatas: sanitized
                 }
+            }, () => {
+                    this.commitState(this.props.location.pathname, this.state);
+                    unsanitized_data = undefined;
+                    sanitized = undefined;
             });
+
 
             this.loadData = false;
         }).catch(err => {
@@ -156,7 +166,11 @@ class Home extends React.Component {
 
     onChange(evt) {
         let query = evt.target.value;
-        if (query === "" || query.length <= 0) this.onSeach = false;
+        if (query === "" || query.length <= 0) {
+            this.onSearch = false;
+        } else {
+            this.onSearch = true;
+        };
         this.db.search(query).then((json) => {
             let datas = json.meals;
 
@@ -167,7 +181,9 @@ class Home extends React.Component {
                     ..._prev,
                     displayedDatas: datas
                 }
-            })
+            });
+
+            this.commitState(this.props.location.pathname, this.state); 
         });
 
     }
@@ -200,7 +216,8 @@ class Home extends React.Component {
                 state: {
                     isShowingDetails: false,
                     foodDetails: {},
-                    isLoading: false
+                    isLoading: false,
+                    displayedDatas: this.state.displayedDatas,
                 },
             }
         );

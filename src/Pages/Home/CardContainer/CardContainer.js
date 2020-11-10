@@ -4,7 +4,7 @@ import './CardContainer.css'
 import Card from '../../../Components/Card/Card';
 import MealDB from '../../../Components/Database/MealDBInterfacer';
 import Loader from '../../../Components/Loader/Loader';
-import { Flipped, Flipper } from 'react-flip-toolkit';
+import { Flipper } from 'react-flip-toolkit';
 import '../../../Components/Card/Card.css'
 
 class CardContainer extends React.Component {
@@ -25,7 +25,7 @@ class CardContainer extends React.Component {
 
     render() {
 
-        if (this.props.parentState.displayedDatas === undefined) this.props.resetDatas();
+        if (this.props.parentState.displayedDatas === undefined) console.log(this.props);
 
         return (
             <div className="cardContainer">

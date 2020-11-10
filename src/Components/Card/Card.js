@@ -25,7 +25,7 @@ class Card extends React.Component {
     render() {
         return (
                 <Flipped flipId={`cardAnim-${this.props.details.idMeal}`} stagger="essential">
-                    <div className={`cardContainer ${this.state.cardAnim ? "" :  "hidden-card" }`} >
+                    <div className={`cardContainer ${this.state.cardAnim  && !this.props.isShowingDetails ? "" :  "hidden-card" }`} >
                         <Flipped flipId={`foodPhoto-${this.props.details.idMeal}`} >
                             {this.props.details.idMeal !== this.props.parentState.foodDetails?.id &&        
                                     <div onClick={() => { this.props.showDetails(this.props.details.idMeal, this.props.details) }} className="card" style={{backgroundImage: !this.state.loadingImage ? `url("${this.props.details.strMealThumb}")` : "", backgroundSize: "cover"}} >

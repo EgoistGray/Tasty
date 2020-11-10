@@ -10,9 +10,6 @@ class MealDB {
         this.createRandomPromise = this.createRandomPromise.bind(this);
 
         this.seenDatasetsIds = [];
-
-
-        this.sanitizeDatasets = this.sanitizeDatasets.bind(this);
     }
 
     createRandomPromise() {
@@ -32,23 +29,26 @@ class MealDB {
         return Promise.all(promises).then(stuff => {
             return new Promise(resolve => {
                 let results = stuff.map(stuff => stuff.meals).flat();
-                results = this.sanitizeDatasets(results);
                 resolve(results);
             });
         });
     }
-    sanitizeDatasets(datasets) {
+    static sanitizeDatasets(datasets) {
         let sanitized = [];
+        let seenDatasetsIds = [];
 
         let ids = datasets.map((dataset) => dataset.idMeal);
         ids.map((id, index) => {
-            if (ids.indexOf(id) === index && this.seenDatasetsIds.indexOf(id) === -1) {
+            if (ids.indexOf(id) === index && seenDatasetsIds.indexOf(id) === -1) {
+
+                seenDatasetsIds.push(id);
                 sanitized.push(datasets[index]);
-                this.seenDatasetsIds.push(id);
             }
 
             return id;
         });
+
+        console.table(sanitized);
 
         return sanitized;
     }
