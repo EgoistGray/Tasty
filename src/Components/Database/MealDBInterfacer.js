@@ -48,8 +48,6 @@ class MealDB {
             return id;
         });
 
-        console.table(sanitized);
-
         return sanitized;
     }
 

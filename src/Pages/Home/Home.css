@@ -109,3 +109,55 @@
     transform: translateY(20px);
     
 }
+
+.contentLoaderContainer{
+    margin-bottom: 150px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader{
+    font-size: 1.5em;
+
+    background-color: rgba(0,0,0,1);
+    color: white;
+
+    padding: 20px 40px;
+    border-radius: 10px;
+
+    height: 3em;
+
+    animation: 5s loading infinite ease-in-out;
+}
+
+.showLoader{
+    opacity: 1;
+
+    transform: translateY(0px);
+    transition: 300ms ease-in-out;
+
+    transition-delay: .3s
+}
+
+.hideLoader{
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 300ms ease-in-out;
+}
+
+@keyframes loading{
+    10%{
+        background-color: rgba(0,0,0,1);
+    }
+    50%{
+        background-color: red;
+    }
+    75%{
+        background-color: blue;
+    }
+    100%{
+        background-color: rgba(0,0,0,1);
+    }
+}

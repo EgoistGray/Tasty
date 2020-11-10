@@ -31,6 +31,7 @@ class Home extends React.Component {
         this.startAnim = this.startAnim.bind(this);
         this.resetDatas = this.resetDatas.bind(this);
         this.commitState = this.commitState.bind(this);
+        this.updateState = this.updateState.bind(this);
 
         this.commitState(props.location.pathname, this.state);
 
@@ -44,9 +45,12 @@ class Home extends React.Component {
                 displayedDatas: [],
                 isLoading: true,
                 enterAnim: false,
+                onBottomPage: false
+
             });
         };
 
+        //Temporary State
         this.loadData = false;
         this.onSearch = false;
         this.db = new MealDB();
@@ -73,7 +77,11 @@ class Home extends React.Component {
     componentDidMount() {
         window.addEventListener('scroll', this.scrollLoader);        
         if( this.state.displayedDatas.length <= 0 ) this.getRandomDatas();
-        setTimeout(this.startAnim, 100)
+        setTimeout(() => {
+            this.startAnim();
+            this.updateState("onBottomPage", true);
+        }, 100);
+
     }
 
     scrollLoader(evt) {
@@ -84,9 +92,25 @@ class Home extends React.Component {
             this.loadData = true;
             this.getRandomDatas();
         }
+
+        //Page Bottom
+        if (scrollProgress >= (total - 100)) {
+            this.updateState("onBottomPage", true);
+        }
+        if (scrollProgress <= (total - 100)) {
+            this.updateState("onBottomPage", false);
+        }
         
     }
 
+    updateState(stateName, stateValue) {
+        this.setState(_prev => {
+            return {
+                ..._prev,
+                [stateName] : stateValue
+            }
+        })
+    }
 
 
     getRandomDatas() {
@@ -159,6 +183,12 @@ class Home extends React.Component {
 
                     <CardContainer resetDatas={this.resetDatas} toggleLoadUI={this.toggleLoadUI} parentState={this.state} showDetails={this.showDetails} />
                 </Flipper>
+
+                    <div className={`contentLoaderContainer ${this.state.onBottomPage && !this.onSearch || this.state.isLoading ? "showLoader" :"hideLoader"}`}>
+                        <div className="loader">
+                            Getting datas ready
+                        </div>
+                    </div>
             </div>
 
         );
@@ -198,14 +228,16 @@ class Home extends React.Component {
         this.props.history.push({
                 pathname: `/details/${id}`, 
                 search: '',
-                state: {isShowingDetails: true,
-                foodDetails: {
-                        id: id,
-                        details: details
-                    },
-                displayedDatas: this.state.displayedDatas,
-                isLoading: false
-            }
+                state: {
+                    ...this.state,
+                    isShowingDetails: true,
+                    foodDetails: {
+                            id: id,
+                            details: details
+                        },
+                    displayedDatas: this.state.displayedDatas,
+                    isLoading: false
+                }
         });
         return;
     }
@@ -214,12 +246,13 @@ class Home extends React.Component {
                 pathname: `/`, 
                 search: '',
                 state: {
-                    isShowingDetails: false,
-                    foodDetails: {},
-                    isLoading: false,
-                    displayedDatas: this.state.displayedDatas,
-                },
-            }
+                        ...this.state,
+                        isShowingDetails: false,
+                        foodDetails: {},
+                        isLoading: false,
+                        displayedDatas: this.state.displayedDatas,
+                    },
+                }
         );
         return;
     }
