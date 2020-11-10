@@ -11,7 +11,6 @@ class Card extends React.Component {
             cardAnim: false
         }
 
-        this.startAnim = this.startAnim.bind(this);
     }
     render() {
         return (
@@ -49,17 +48,8 @@ class Card extends React.Component {
             })
         }
 
-        setTimeout(this.startAnim, 100);
     }
 
-    startAnim() {
-        this.setState(_prev => {
-            return {
-                ..._prev,
-                cardAnim: true
-            }
-        })
-    }
 }
 
 export default Card;

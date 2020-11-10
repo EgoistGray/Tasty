@@ -29,13 +29,13 @@ class CardContainer extends React.Component {
 
         return (
             <div className="cardContainer">
-                <Flipper flipKey={ this.props.parentState.isLoading}>
+                <Flipper flipKey={this.state.datas} straggerConfig={{ essentialCards: {reverse:true} }}>
                     <div className="cardAligner">
                         {/* Pls fix the loading stuff */}
                         { this.props.parentState.isLoading  ? <Loader /> : this.props.parentState.displayedDatas.map(data => {
                             return (
-                                <Flipped key={`card-${data.strMeal}`} stagger="essentialCards" onAppear={this.startAnim}>
-                                    { flipProps => <Card className={`cardContainer`} flipProps={flipProps} parentState={this.props.parentState} key={`card-${data.strMeal}`} name={data.strMeal} details={data} showDetails={this.props.showDetails} />}
+                                <Flipped key={`card-${data.strMeal}`} stagger="essentialCards" onStart={setTimeout(this.startAnim, 200)}>
+                                    { flipProps => <Card className={`cardContainer ${this.state.anim ? "" :  "hidden-card" }`} flipProps={flipProps} parentState={this.props.parentState} key={`card-${data.strMeal}`} name={data.strMeal} details={data} showDetails={this.props.showDetails} />}
                                 </Flipped>
                             )
                         }) }
@@ -46,7 +46,6 @@ class CardContainer extends React.Component {
         )
     }
     startAnim() {
-        console.log("RANIM");
         this.setState(_prev => {
             return {
                 ..._prev,

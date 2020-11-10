@@ -88,6 +88,7 @@ class Home extends React.Component {
 
     getRandomDatas() {
         this.db.getRandoms(this.quantityPerBatch).then(result => {
+            console.log(`Data push`);
             result = result.flat();
 
             this.setState(_prev => {
