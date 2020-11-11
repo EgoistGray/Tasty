@@ -8,11 +8,11 @@ class Navbar extends React.Component {
         super();
 
         this.state = {
-            opaqueTaskbar:false,
+            opaqueTaskbar: false,
         }
 
         this.config = {
-            opaqueOffset : -600
+            opaqueOffset: -600
         }
 
         this.scrollOpaque = this.scrollOpaque.bind(this);
@@ -20,7 +20,7 @@ class Navbar extends React.Component {
     }
 
     scrollOpaque(evt) {
-        if (window.scrollY >= ( this.config.opaqueOffset  + window.innerHeight)) {
+        if (window.scrollY >= (this.config.opaqueOffset + window.innerHeight)) {
             this.setState(_prev => {
                 return {
                     _prev,
@@ -28,8 +28,8 @@ class Navbar extends React.Component {
                 }
             })
         };
-        if (window.scrollY <= ( this.config.opaqueOffset  + window.innerHeight)) {
-            this.setState( _prev => {
+        if (window.scrollY <= (this.config.opaqueOffset + window.innerHeight)) {
+            this.setState(_prev => {
                 return {
                     _prev,
                     opaqueTaskbar: false
@@ -44,6 +44,7 @@ class Navbar extends React.Component {
                 <NavSplitter>
                     <NavItem dest="/" name="Home" />
                     <NavItem dest="/about" name="About us" />
+                    <NavItem dest="/contact" name="Contact us" />
                 </NavSplitter>
 
                 {/* Not yet implementing account system */}

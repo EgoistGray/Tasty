@@ -71,12 +71,12 @@ class Home extends React.Component {
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.scrollLoader);   
+        window.removeEventListener('scroll', this.scrollLoader);
     }
 
     componentDidMount() {
-        window.addEventListener('scroll', this.scrollLoader);        
-        if( this.state.displayedDatas.length <= 0 ) this.getRandomDatas();
+        window.addEventListener('scroll', this.scrollLoader);
+        if (this.state.displayedDatas.length <= 0) this.getRandomDatas();
         setTimeout(() => {
             this.startAnim();
             this.updateState("onBottomPage", true);
@@ -100,14 +100,14 @@ class Home extends React.Component {
         if (scrollProgress <= (total - 100)) {
             this.updateState("onBottomPage", false);
         }
-        
+
     }
 
     updateState(stateName, stateValue) {
         this.setState(_prev => {
             return {
                 ..._prev,
-                [stateName] : stateValue
+                [stateName]: stateValue
             }
         })
     }
@@ -127,9 +127,9 @@ class Home extends React.Component {
                     displayedDatas: sanitized
                 }
             }, () => {
-                    this.commitState(this.props.location.pathname, this.state);
-                    unsanitized_data = undefined;
-                    sanitized = undefined;
+                this.commitState(this.props.location.pathname, this.state);
+                unsanitized_data = undefined;
+                sanitized = undefined;
             });
 
 
@@ -154,41 +154,41 @@ class Home extends React.Component {
                 <Flipper flipKey={this.state.enterAnim}>
                     <Flipped staggerConfig={{ title: { reverse: true } }}>
                         <div className="search_component">
-                                <div className={`title`}>
-                                    <Flipped flipId="tastySearch" stagger="start">
-                                        <div className={`brand ${this.state.enterAnim ? "" : "hidden-title"}`}>Tasty</div>
-                                    </Flipped>
-                                    <Flipped flipId="tastyMotto" stagger="start">
-                                        <div className={`motto ${this.state.enterAnim ? "" : "hidden-title"}`}>For food lovers, By food lovers</div>
-                                    </Flipped>
-                                </div>
-                            <Flipped flipId="searchBar" stagger="start"> 
+                            <div className={`title`}>
+                                <Flipped flipId="tastySearch" stagger="start">
+                                    <div className={`brand ${this.state.enterAnim ? "" : "hidden-title"}`}>Tasty</div>
+                                </Flipped>
+                                <Flipped flipId="tastyMotto" stagger="start">
+                                    <div className={`motto ${this.state.enterAnim ? "" : "hidden-title"}`}>For food lovers, By food lovers</div>
+                                </Flipped>
+                            </div>
+                            <Flipped flipId="searchBar" stagger="start">
                                 <div className={`search ${this.state.enterAnim ? "" : "hidden-title"}`}>
                                     <div className="search_icon">
                                         <input onChange={this.onChange} className="query" type="text" id="query" placeholder="What are you craving for?" />
                                     </div>
                                 </div>
-                            </Flipped>   
+                            </Flipped>
                         </div>
                     </Flipped>
                 </Flipper>
 
-                <Flipper flipKey={this.state.isShowingDetails}> 
+                <Flipper flipKey={this.state.isShowingDetails}>
                     <Flipped flipId="foodDesc">
                         {!this.state.isShowingDetails && <div className={`interpolator ${this.state.isShowingDetails ? "interpolator-visible" : ""}`} />}
                     </Flipped>
-                    <Flipped flipId="details"> 
-                        {this.state.isShowingDetails && <Details hideDetails={this.hideDetails } parentState={this.state} foodDetails={this.state.foodDetails}/>}
+                    <Flipped flipId="details">
+                        {this.state.isShowingDetails && <Details hideDetails={this.hideDetails} parentState={this.state} foodDetails={this.state.foodDetails} />}
                     </Flipped>
 
                     <CardContainer resetDatas={this.resetDatas} toggleLoadUI={this.toggleLoadUI} parentState={this.state} showDetails={this.showDetails} />
                 </Flipper>
 
-                    <div className={`contentLoaderContainer ${this.state.onBottomPage && !this.onSearch || this.state.isLoading ? "showLoader" :"hideLoader"}`}>
-                        <div className="loader">
-                            Getting datas ready
+                <div className={`contentLoaderContainer ${(this.state.onBottomPage && !this.onSearch) || this.state.isLoading ? "showLoader" : "hideLoader"}`}>
+                    <div className="loader">
+                        Getting datas ready
                         </div>
-                    </div>
+                </div>
             </div>
 
         );
@@ -204,7 +204,7 @@ class Home extends React.Component {
         this.db.search(query).then((json) => {
             let datas = json.meals;
 
-            if (datas === null || datas.length < 0) datas = []; 
+            if (datas === null || datas.length < 0) datas = [];
 
             this.setState(_prev => {
                 return {
@@ -213,7 +213,7 @@ class Home extends React.Component {
                 }
             });
 
-            this.commitState(this.props.location.pathname, this.state); 
+            this.commitState(this.props.location.pathname, this.state);
         });
 
     }
@@ -226,33 +226,33 @@ class Home extends React.Component {
 
     showDetails(id, details) {
         this.props.history.push({
-                pathname: `/details/${id}`, 
-                search: '',
-                state: {
-                    ...this.state,
-                    isShowingDetails: true,
-                    foodDetails: {
-                            id: id,
-                            details: details
-                        },
-                    displayedDatas: this.state.displayedDatas,
-                    isLoading: false
-                }
+            pathname: `/details/${id}`,
+            search: '',
+            state: {
+                ...this.state,
+                isShowingDetails: true,
+                foodDetails: {
+                    id: id,
+                    details: details
+                },
+                displayedDatas: this.state.displayedDatas,
+                isLoading: false
+            }
         });
         return;
     }
     hideDetails() {
         this.props.history.push({
-                pathname: `/`, 
-                search: '',
-                state: {
-                        ...this.state,
-                        isShowingDetails: false,
-                        foodDetails: {},
-                        isLoading: false,
-                        displayedDatas: this.state.displayedDatas,
-                    },
-                }
+            pathname: `/`,
+            search: '',
+            state: {
+                ...this.state,
+                isShowingDetails: false,
+                foodDetails: {},
+                isLoading: false,
+                displayedDatas: this.state.displayedDatas,
+            },
+        }
         );
         return;
     }
